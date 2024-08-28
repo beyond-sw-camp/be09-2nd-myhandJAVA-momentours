@@ -25,3 +25,4 @@ logging:
     com:
       myhandjava:
         momentours: debug
+        # logging 범위는 알아서 조절
