@@ -35,4 +35,6 @@ public class UserEntityDTO {
     // 앞으로 로직에 필요한 생성자 만들기
 
 
+
+
 }

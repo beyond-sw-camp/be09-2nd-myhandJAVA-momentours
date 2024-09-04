@@ -12,4 +12,6 @@ public interface MomentoursClient {
     @GetMapping("/calendar/{coupleNo}")
      ResponseEntity<ResponseMessage> findAllSchedule(@PathVariable int coupleNo);
 
+
+
     }
