@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myhandjava.momentours.user.query.repository.UserMapper">
+    <!--    UserId로 회원 정보 조회하기 ( 일반 멤버 )    -->
+    <resultMap id="userResultMap" type="com.myhandjava.momentours.user.command.domain.aggregate.User">
+        <id property="userNo" column="user_no"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userPwd" column="user_pwd"/>
+        <result property="userName" column="user_name"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userBirth" column="user_birth"/>
+        <result property="userMBTI" column="user_mbti"/>
+        <result property="userRole" column="user_role"/>
+        <result property="userGender" column="user_gender"/>
+        <result property="accessibleDate" column="accessible_date"/>
+        <result property="userReportCount" column="user_report_count"/>
+        <result property="userCreatedAt" column="user_create_at"/>
+        <result property="userUpdatedAt" column="user_update_at"/>
+    </resultMap>
+
+    <resultMap id="inquiryResultMap" type="com.myhandjava.momentours.user.command.domain.aggregate.Inquiry">
+    <id property="inquiryNo" column="inquiry_no"/>
+    <result property="UserNo" column="inquiry_user_no"/>
+    <result property="Title" column="inquiry_title"/>
+    <result property="Content" column="inquiry_content"/>
+    <result property="answer" column="inq_ans_date"/>
+    <result property="createdAt" column="inq_create_date"/>
+    <result property="updatedAt" column="inq_update_date"/>
+    <result property="isDeleted" column="inq_is_deleted"/>
+    </resultMap>
+    <!-- SQL 쿼리 정의 ( 정상 실행되면 컨밴션 맞추기 ) -->
+    <select id="searchUserWithEmail" resultMap="userResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.User">
+
+        SELECT USER_NICKNAME
+             , USER_MBTI
+             , USER_GENDER
+          FROM TB_USER
+         WHERE USER_EMAIL = #{ userEmail }
+    </select>
+
+    <select id="searchUserWithNickname" resultMap="userResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.User">
+
+        SELECT USER_NICKNAME
+             , USER_MBTI
+             , USER_GENDER
+          FROM TB_USER
+         WHERE USER_NICKNAME = #{ nickname }
+    </select>
+
+    <select id="getUserInfoWithEmail" resultMap="userResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.User">
+
+        SELECT USER_NO
+             , USER_EMAIL
+             , USER_PWD
+             , USER_NAME
+             , USER_NICKNAME
+             , USER_PHONE
+             , USER_BIRTH
+             , USER_MBTI
+             , USER_ROLE
+             , USER_GENDER
+             , ACCESSIBLE_DATE
+             , USER_REPORT_COUNT
+             , USER_CREATE_AT
+             , USER_UPDATE_AT
+             , USER_LAST_LOGIN
+             , USER_PARTNER_NO
+          FROM TB_USER
+         WHERE USER_EMAIL = #{ userEmail }
+    </select>
+
+    <select id="getUserPwd" resultMap="userResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.User">
+
+        SELECT USER_PWD
+          FROM TB_USER
+         WHERE USER_EMAIL = #{ userEmail }
+    </select>
+
+    <select id="getInquiryList" resultMap="inquiryResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.Inquiry">
+        SELECT INQUIRY_NO
+             , INQUIRY_TITLE
+             , INQUIRY_CONTENT
+             , INQ_ANS_CONTENT
+             , INQ_CREATE_DATE
+             , INQ_UPDATE_DATE
+             , INQUIRY_IS_DELETED
+             , INQUIRY_USER_NO
+          FROM TB_INQUIRY
+         WHERE INQUIRY_USER_NO = #{ userNo }
+           AND INQUIRY_IS_DELETED = 0
+    </select>
+
+    <select id="getUserIdWithPhone" resultMap="userResultMap" parameterType="com.myhandjava.momentours.user.command.domain.aggregate.User">
+        SELECT USER_EMAIL
+          FROM TB_USER
+         WHERE USER_PHONE = #{ userPhone }
+    </select>
+
+
+
+</mapper>
